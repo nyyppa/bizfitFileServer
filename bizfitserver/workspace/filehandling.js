@@ -10,7 +10,6 @@ var qs = require('querystring');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var async = require('async');
-var NodeJobs = require('Jobs');
 var dbversion=75;
 var fs = require("fs");
 var path = require('path');
