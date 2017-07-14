@@ -42,8 +42,8 @@ var util = require('util');
 
 
 
-    var url = 'mongodb://127.0.0.1:27017/files';
-    
+   // var url = 'mongodb://127.0.0.1:27017/files';
+    var url ="mongodb://bizfitserverdb:loC4iF0b78j019bygn3ODtTTDr1M2x65xoLL3JHH7VWCZFq94NA6PrJgGk13ZrHEKUenzoW4jlPYHvQWNZPoog==@bizfitserverdb.documents.azure.com:10255/files?ssl=true&replicaSet=globaldb"
     var PORT = 8081;
     //const PORT = $PORT;
     
