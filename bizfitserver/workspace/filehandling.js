@@ -41,8 +41,8 @@ var util = require('util');
 
 
 
-   // var url = 'mongodb://127.0.0.1:27017/files';
-    var url ="mongodb://bizfitserverdb:loC4iF0b78j019bygn3ODtTTDr1M2x65xoLL3JHH7VWCZFq94NA6PrJgGk13ZrHEKUenzoW4jlPYHvQWNZPoog==@bizfitserverdb.documents.azure.com:10255/files?ssl=true&replicaSet=globaldb"
+    var url = 'mongodb://127.0.0.1:27017/files';
+   // var url ="mongodb://bizfitserverdb:loC4iF0b78j019bygn3ODtTTDr1M2x65xoLL3JHH7VWCZFq94NA6PrJgGk13ZrHEKUenzoW4jlPYHvQWNZPoog==@bizfitserverdb.documents.azure.com:10255/files?ssl=true&replicaSet=globaldb"
     var PORT = 8081;
     //const PORT = $PORT;
     
@@ -81,11 +81,11 @@ var util = require('util');
                 {
                     request.connection.destroy();
                 }
-                if(request.headers["job"]=="upload")
+                if(request.headers["job"]=="uploadfile")
                 {
                     body.push(data);
                 }
-                else if(request.headers["job"]=="download")
+                else if(request.headers["job"]=="downloadfile")
                 {
                      body += data;
                 }
@@ -106,7 +106,7 @@ var util = require('util');
             {
                 
                 
-                if(request.headers["job"]=="upload")
+                if(request.headers["job"]=="uploadfile")
                 {
                     body = Buffer.concat(body);
                     var fs = require('fs');
@@ -143,7 +143,7 @@ var util = require('util');
                     console.log("kettu");
                     handlePayLoadUploadFile(response);
                 }
-                else if(request.headers["job"]=="download")
+                else if(request.headers["job"]=="downloadfile")
                 {
                     MongoClient.connect(url, function(err, db){
                         assert.equal(err,null);
