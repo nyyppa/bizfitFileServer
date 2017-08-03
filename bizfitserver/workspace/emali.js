@@ -4,8 +4,8 @@ var MongoClient = require('mongodb').MongoClient;
 const assert = require('assert'); 
 
 var mailListener = new MailListener({
-  username: "atte@atteleikki.biz",
-  password: "passutassu",
+  username: "form@atteleikki.biz",
+  password: "formporn",
   host: "box.atteleikki.biz",
   port: 993, // imap port 
   tls: true,
