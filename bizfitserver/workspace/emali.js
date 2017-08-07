@@ -1,7 +1,8 @@
 "use strict";
 var MailListener = require("mail-listener2");
 var MongoClient = require('mongodb').MongoClient;
-const assert = require('assert'); 
+const assert = require('assert');
+var     cheerio = require('cheerio');
 
 var mailListener = new MailListener({
   username: "form@atteleikki.biz",
@@ -14,14 +15,14 @@ var mailListener = new MailListener({
   debug: console.log, // Or your custom function with only one incoming argument. Default: null 
   tlsOptions: { rejectUnauthorized: false },
   mailbox: "INBOX", // mailbox to monitor 
-  searchFilter: ["UNSEEN"], // the search filter being used after an IDLE notification has been retrieved 
+  searchFilter: ["SEEN"], // the search filter being used after an IDLE notification has been retrieved 
   markSeen: true, // all fetched email willbe marked as seen and not fetched next time 
   fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`, 
   mailParserOptions: {streamAttachments: true}, // options to be passed to mailParser lib. 
   attachments: true,// download attachments as they are encountered to the project directory 
   attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments 
 });
-var url = 'mongodb://127.0.0.1:27017/test';
+var url = 'mongodb://127.0.0.1:27017/coaches';
  
 mailListener.start(); // start listening 
  
@@ -42,22 +43,42 @@ mailListener.on("error", function(err){
  
 mailListener.on("mail", function(mail, seqno, attributes){
   // do something with mail object including attachments 
-    console.log(mail.text);
-  //console.log(mail);
-    console.log(mail.attachments);
-    console.log(attributes);
+    //console.log(mail['html']);
+   // console.log("peppu");
+    //console.log(mail['textAsHtml']);
+    var $ = cheerio.load(mail['html']);
     var coach={};
+    //console.log($("#expertInput").text());
+    $('div').each(function(i, elem) {
+        if(this.attribs.id=="langs")
+        {
+            var array=[];
+             $('zzz').each(function(i, elem) {
+                console.log($(this).text());
+                array.push($(this).text());
+             });
+            //console.log($(this).text());
+            /*
+            var array=$(this).text().replace(new RegExp("  ", 'g'),"").split("\n");
+            array=array.slice(1,array.length-1);
+            
+            console.log(array);
+            console.log(array.length)*/
+            coach['langs']=array;
+        }else{
+           coach[this.attribs.id]=$(this).text();
+        }
+        //console.log(this.attribs.id);
+        //console.log($(this).text());
+    });
+    console.log(coach)
+    //languages.push()
     var finder={};
+    finder['email']=coach['email'];
     //finder['nimi']=coach['nimi'];
     MongoClient.connect(url, function(err, db)
     {
         db.collection('coach').update(finder, coach, { upsert: true });
-        db.collection('user').save(coach, {
-            w: 1
-        }, function(err, result) {
-             assert.equal(err,null);
-            db.close();
-        });   
     });
   //console.log("emailParsed", mail);
   // mail processing code goes here 
