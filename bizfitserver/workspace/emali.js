@@ -77,9 +77,9 @@ mailListener.on("mail", function(mail, seqno, attributes){
     //finder['nimi']=coach['nimi'];
     MongoClient.connect(url, function(err, db)
     {
-        //db.collection('coach').update(finder, coach, { upsert: true });
+        db.collection('coach').update(finder, coach, { upsert: true });
         //db.collection('coach').update(finder, coach);
-        db.collection('coach').insert(coach);
+        //db.collection('coach').insert(coach);
     });
   //console.log("emailParsed", mail);
   // mail processing code goes here 
