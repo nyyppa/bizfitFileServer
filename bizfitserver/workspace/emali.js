@@ -15,7 +15,7 @@ var mailListener = new MailListener({
   debug: console.log, // Or your custom function with only one incoming argument. Default: null 
   tlsOptions: { rejectUnauthorized: false },
   mailbox: "INBOX", // mailbox to monitor 
-  searchFilter: ["UNSEEN"], // the search filter being used after an IDLE notification has been retrieved 
+  searchFilter: ["SEEN"], // the search filter being used after an IDLE notification has been retrieved 
   markSeen: true, // all fetched email willbe marked as seen and not fetched next time 
   fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`, 
   mailParserOptions: {streamAttachments: true}, // options to be passed to mailParser lib. 
@@ -45,7 +45,6 @@ mailListener.on("mail", function(mail, seqno, attributes){
   // do something with mail object including attachments 
     //console.log(mail['html']);
    // console.log("peppu");
-    //console.log(mail['textAsHtml']);
     var $ = cheerio.load(mail['html']);
     var coach={};
     //console.log($("#expertInput").text());
@@ -78,7 +77,8 @@ mailListener.on("mail", function(mail, seqno, attributes){
     //finder['nimi']=coach['nimi'];
     MongoClient.connect(url, function(err, db)
     {
-        db.collection('coach').update(finder, coach, { upsert: true });
+        //db.collection('coach').update(finder, coach, { upsert: true });
+        db.collection('coach').update(finder, coach);
     });
   //console.log("emailParsed", mail);
   // mail processing code goes here 
