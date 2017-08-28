@@ -1,5 +1,5 @@
 "use strict";
-var MailListener = require("mail-listener2");
+var MailListener = require("mail-listener-fixed");
 var MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 var     cheerio = require('cheerio');
